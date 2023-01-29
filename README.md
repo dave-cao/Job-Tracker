@@ -49,3 +49,15 @@ Different parsers:
 
 2. Consolidate all books and audiobooks based on a search term
  - Web scrape torrent hrefs / display it on website
+ 
+### Start
+
+Decided to do a web scraping project on audiobook (for now)
+
+- First I have to get the proper search term for the search string
+    - I'm using .format for this
+    
+- I want to now get all the links and have the ones that say "percy jackson" at the top
+    - getting links: soup.find_all("a")
+
+
