@@ -12,7 +12,7 @@ class Books:
         self.audiobook_url = "https://audiobookbay.se"
         self.book_list = []
 
-    def get_audiobooks(self, query):
+    def get_audiobooks(self, query, page_number):
         """
         Grabs the audiobook title and urls from the specified search query
         """
@@ -22,33 +22,31 @@ class Books:
         targeted = []
         non_targeted = []
 
-        for i in range(1, 6):
+        # Get website data
+        audiobook_search_url = (
+            f"{self.audiobook_url}/page/{page_number}/?s={search_string}"
+        )
 
-            # Get website data
-            audiobook_search_url = f"{self.audiobook_url}/page/{i}/?s={search_string}"
+        print("Getting response...")
+        response = requests.get(audiobook_search_url, timeout=10)
 
-            print("Getting response...")
-            response = requests.get(audiobook_search_url, timeout=10)
+        # extract all titles from page
+        soup = BeautifulSoup(response.text, "lxml-xml")
+        books = soup.find_all("div", class_="postTitle")
 
-            # extract all titles from page
-            soup = BeautifulSoup(response.text, "lxml-xml")
-            books = soup.find_all("div", class_="postTitle")
-            if not books:
-                break
+        for book_id, book in enumerate(books):
+            title = book.get_text()
+            link = book.find("a").get("href")
+            link = f"{self.audiobook_url}{link}"
 
-            for book_id, book in enumerate(books):
-                title = book.get_text()
-                link = book.find("a").get("href")
-                link = f"{self.audiobook_url}{link}"
-
-                if query.lower() in title.lower():
-                    targeted.append(Book(id=book_id, title=title, link=link))
-                else:
-                    non_targeted.append(Book(id=book_id, title=title, link=link))
+            if query.lower() in title.lower():
+                targeted.append(Book(id=book_id, title=title, link=link))
+            else:
+                non_targeted.append(Book(id=book_id, title=title, link=link))
 
         book_list = targeted + non_targeted
         self.book_list = book_list
-        return book_list  # returns a list of books
+        return book_list, query  # returns a list of books
 
     def get_torrent_link(self, book_id):
         # book is a dictionary

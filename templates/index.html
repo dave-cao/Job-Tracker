@@ -9,11 +9,17 @@
 
 
 
-    <ol>
-        {% for book in book_list %}
-            <li><a target="_blank" href="{{ url_for("book_info", book_id=book.id) }}">{{ book.title }}</a> - <a href="{{ book.link }}">src</a></li>
-        {% endfor %}
-    </ol>
+    {% if book_list %}
+        <ol>
+            {% for book in book_list[0] %}
+                <li><a target="_blank" href="{{ url_for("book_info", book_id=book.id) }}">{{ book.title }}</a> - <a href="{{ book.link }}">src</a></li>
+            {% endfor %}
+        </ol>
+
+        <p>Page {{ page_number }}...</p>
+        <a href="{{ url_for("home", next_page=True, query=book_list[1], page=page_number) }}">Next Page</a>
+
+    {% endif %}
 
 
 {% endblock %}

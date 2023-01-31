@@ -18,11 +18,23 @@ audiobooks = []
 
 @app.route("/", methods=["GET", "POST"])
 def home():
+    next_page = request.args.get("next_page")
+    page_number = 1
+
     form = QueryForm()
-    if form.validate_on_submit():
+
+    print(request.args.get("page"))
+    if form.validate_on_submit() or next_page:
         query = form.query.data
-        book_list = books.get_audiobooks(query)
-        return render_template("index.html", form=form, book_list=book_list)
+
+        if not query:
+            page_number = int(request.args.get("page", 0)) + 1
+            query = request.args.get("query")
+
+        book_list = books.get_audiobooks(query, page_number=page_number)
+        return render_template(
+            "index.html", form=form, book_list=book_list, page_number=page_number
+        )
 
     return render_template("index.html", form=form)
 
