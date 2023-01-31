@@ -60,4 +60,6 @@ Decided to do a web scraping project on audiobook (for now)
 - I want to now get all the links and have the ones that say "percy jackson" at the top
     - getting links: soup.find_all("a")
 
+    
+- Create a flask server to display links
 
