@@ -32,19 +32,33 @@ class Books:
 
         # extract all titles from page
         soup = BeautifulSoup(response.text, "lxml-xml")
-        books = soup.find_all("div", class_="postTitle")
+        books = soup.find_all("div", class_="post")
 
-        for book_id, book in enumerate(books):
+        for book_id, book_post in enumerate(books):
+            book_id += 1
+            book = book_post.find("div", class_="postTitle")
+            book_img = (
+                book_post.find("div", class_="postContent").find("img").get("src")
+            )
+            print(book_img)
+
+            # Increases book id number based on page number
+            if page_number - 1:
+                book_id = (book_id * (page_number - 1)) + 15
+
             title = book.get_text()
             link = book.find("a").get("href")
             link = f"{self.audiobook_url}{link}"
 
             if query.lower() in title.lower():
-                targeted.append(Book(id=book_id, title=title, link=link))
+                targeted.append(Book(id=book_id, title=title, link=link, img=book_img))
             else:
-                non_targeted.append(Book(id=book_id, title=title, link=link))
+                non_targeted.append(
+                    Book(id=book_id, title=title, link=link, img=book_img)
+                )
 
         book_list = targeted + non_targeted
+
         self.book_list = book_list
         return book_list, query  # returns a list of books
 
@@ -70,10 +84,11 @@ class Books:
 
 
 class Book:
-    def __init__(self, id, title, link):
+    def __init__(self, id, title, link, img):
         self.id = id
         self.title = title
         self.link = link
+        self.img = img
 
 
 # grab the torrent link from selected website

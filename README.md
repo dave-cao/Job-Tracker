@@ -46,7 +46,28 @@ Different parsers:
 1. Scraping job postings based on a search query
  - Place the job postings in an easy to read format or db, then have the ability to 
     "X" / complete these job postings like the todo list
+ - Have the ability to print out or export job postings for easy cross offs or to to
+    let people track the places they applied to
+ - Have a login / logout function to allow peopel to save their progress
+ - Have a few buttons
+    - 1. Applied and Waiting
+    - 2. Interview Process
+    - 3. Rejected
+    - 4. Offer.
+    
+ - Have the ability to import previous job postings
+ - Display "Your job listings"
+    - Then have an option to choose which job listing you want to save
+    - Or there is a "save all" button
+    - Ability to delete, and add job listings
 
+    - ability to write a summary of the job and why you want to apply
+    - Information such as number, email, and website is curated already
+    - Provide cover letter templates 
+    
+ - TITLE = Job Tracker
+
+ 
 2. Consolidate all books and audiobooks based on a search term
  - Web scrape torrent hrefs / display it on website
  
@@ -66,6 +87,7 @@ Decided to do a web scraping project on audiobook (for now)
 TODO
 
 - [X] Create a pagination system for next page
+- [ ] Need a default image for links without images
 
 
 
