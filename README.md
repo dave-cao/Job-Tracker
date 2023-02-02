@@ -61,6 +61,7 @@ Different parsers:
     - Or there is a "save all" button
     - Ability to delete, and add job listings
 
+
     - ability to write a summary of the job and why you want to apply
     - Information such as number, email, and website is curated already
     - Provide cover letter templates 
@@ -89,6 +90,7 @@ TODO
 - [X] Create a pagination system for next page
 - [ ] Need a default image for links without images
 
+- [ ] Testing changes 
 
 
 
