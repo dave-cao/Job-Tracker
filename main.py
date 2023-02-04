@@ -1,10 +1,13 @@
 import time
+from pprint import pprint as pp
 
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 # user search inputs
 query = "python developer"
@@ -34,22 +37,72 @@ job_sites = {
 }
 
 
-# for job_site, url in job_sites.items():
-#     response = requests.get(url)
-#     print(response, job_site)
-#
 indeed_url = f"https://ca.indeed.com/jobs?q={query}&l={location}"
-print(indeed_url)
 
-# SELENIUM FOR THE BACK POCKET
+# Initialize selenium
 driver = webdriver.Firefox()
+
+print("Opening web page...")
 driver.get(indeed_url)
-page_source = driver.page_source
+wait = WebDriverWait(driver, 10)
 
-# soup = BeautifulSoup(page_source, "lxml-xml")
-# print(soup.text)
 
-time.sleep(5)
+jobs = wait.until(
+    EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".jcs-JobTitle"))
+)
+scraped_jobs = []
+for job in jobs:
+
+    # Scroll job into view and click
+    driver.execute_script("arguments[0].scrollIntoView();", job)
+    job.click()
+
+    job_container = wait.until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, ".jobsearch-JobComponent"))
+    )
+
+    # Get the job title
+    job_title = job_container.find_element(By.CSS_SELECTOR, "span")
+    job_title = job_title.text[:-11]
+
+    # Get the company name
+    company_name = job_container.find_element(
+        By.CSS_SELECTOR, ".jobsearch-InlineCompanyRating a"
+    )
+    company_name = company_name.text
+
+    # Get the apply now link
+    application_link = job.get_attribute("href")
+
+    # Job Type - put it in a list
+    job_type_container = job_container.find_elements(
+        By.CSS_SELECTOR, "#jobDetailsSection div div"
+    )
+    key_words = ("Job type", "Application Details", "Salary")
+    application_details = [
+        job.text for job in job_type_container if job.text not in key_words
+    ]
+
+    # Job description
+    job_description = job_container.find_element(By.CSS_SELECTOR, "#jobDescriptionText")
+    job_description = job_description.text
+
+    # Put everything in a dictionary
+    job_info = {
+        "title": job_title,
+        "company_name": company_name,
+        "application_link": application_link,
+        "application_details": application_details,
+        "job_description": job_description,
+    }
+
+    scraped_jobs.append(job_info)
+
+
+# link = job_title.get_attribute("href")
+pp(scraped_jobs)
+
+
 driver.close()
 
 
@@ -57,3 +110,4 @@ driver.close()
 # Anki Cards
 # 1. What is the params and header kwargs for in the requests module?
 # 2. How to use selenium and beautiful soup together? --> selenium has .page_source
+# 3. How do you scroll into view an element with Selenium?
