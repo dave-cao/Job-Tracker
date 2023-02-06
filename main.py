@@ -4,6 +4,8 @@ from pprint import pprint as pp
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.common.exceptions import (ElementClickInterceptedException,
+                                        NoSuchElementException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -38,6 +40,7 @@ job_sites = {
 
 
 indeed_url = f"https://ca.indeed.com/jobs?q={query}&l={location}"
+print(indeed_url)
 
 # Initialize selenium
 driver = webdriver.Firefox()
@@ -47,62 +50,99 @@ driver.get(indeed_url)
 wait = WebDriverWait(driver, 10)
 
 
-jobs = wait.until(
-    EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".jcs-JobTitle"))
-)
-scraped_jobs = []
-for job in jobs:
+def get_page_info():
+    """Returns all the jobs info in a dict of a page"""
 
-    # Scroll job into view and click
-    driver.execute_script("arguments[0].scrollIntoView();", job)
-    job.click()
-
-    job_container = wait.until(
-        EC.visibility_of_element_located((By.CSS_SELECTOR, ".jobsearch-JobComponent"))
+    jobs = wait.until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".jcs-JobTitle"))
     )
+    scraped_jobs = []
 
-    # Get the job title
-    job_title = job_container.find_element(By.CSS_SELECTOR, "span")
-    job_title = job_title.text[:-11]
+    # Scrape from page 1
+    for job in jobs:
 
-    # Get the company name
-    company_name = job_container.find_element(
-        By.CSS_SELECTOR, ".jobsearch-InlineCompanyRating a"
-    )
-    company_name = company_name.text
+        # Make it so it's not like we're web scraping
+        time.sleep(2)
 
-    # Get the apply now link
-    application_link = job.get_attribute("href")
+        # Scroll job into view and click
+        driver.execute_script("arguments[0].scrollIntoView();", job)
+        job.click()
 
-    # Job Type - put it in a list
-    job_type_container = job_container.find_elements(
-        By.CSS_SELECTOR, "#jobDetailsSection div div"
-    )
-    key_words = ("Job type", "Application Details", "Salary")
-    application_details = [
-        job.text for job in job_type_container if job.text not in key_words
-    ]
+        job_container = wait.until(
+            EC.visibility_of_element_located(
+                (By.CSS_SELECTOR, ".jobsearch-JobComponent")
+            )
+        )
 
-    # Job description
-    job_description = job_container.find_element(By.CSS_SELECTOR, "#jobDescriptionText")
-    job_description = job_description.text
+        # Get the job title
+        job_title = job_container.find_element(By.CSS_SELECTOR, "span")
+        job_title = job_title.text[:-11]
 
-    # Put everything in a dictionary
-    job_info = {
-        "title": job_title,
-        "company_name": company_name,
-        "application_link": application_link,
-        "application_details": application_details,
-        "job_description": job_description,
-    }
+        # Get the company name
+        company_name = job_container.find_element(
+            By.CSS_SELECTOR, ".jobsearch-InlineCompanyRating a"
+        )
+        company_name = company_name.text
 
-    scraped_jobs.append(job_info)
+        # Get the apply now link
+        application_link = job.get_attribute("href")
+
+        # Job Type - put it in a list
+        job_type_container = job_container.find_elements(
+            By.CSS_SELECTOR, "#jobDetailsSection div div"
+        )
+        key_words = ("Job type", "Application Details", "Salary")
+        application_details = [
+            job.text for job in job_type_container if job.text not in key_words
+        ]
+
+        # Job description
+        job_description = job_container.find_element(
+            By.CSS_SELECTOR, "#jobDescriptionText"
+        )
+        job_description = job_description.text
+
+        # Put everything in a dictionary
+        job_info = {
+            "title": job_title,
+            "company_name": company_name,
+            "application_link": application_link,
+            "application_details": application_details,
+            "job_description": job_description,
+        }
+
+        scraped_jobs.append(job_info)
+
+    return scraped_jobs
 
 
-# link = job_title.get_attribute("href")
-pp(scraped_jobs)
+pages = []
 
+while True:
+    pages += get_page_info()
 
+    # Next button
+    try:
+        # Click on next page button at end of page
+        next_page_btn = driver.find_element(By.CSS_SELECTOR, "[aria-label='Next Page']")
+        next_page_btn.click()
+    except NoSuchElementException:
+        # if there is no more next pages, then end the loop
+        break
+
+    # Linkedin Popup
+    try:
+        alert_obj_x = driver.find_element(
+            By.CSS_SELECTOR, ".icl-CloseButton.icl-Modal-close"
+        )
+        alert_obj_x.click()
+    except NoSuchElementException:
+        continue
+
+print(pages)
+print(len(pages))
+
+time.sleep(5)
 driver.close()
 
 
@@ -111,3 +151,4 @@ driver.close()
 # 1. What is the params and header kwargs for in the requests module?
 # 2. How to use selenium and beautiful soup together? --> selenium has .page_source
 # 3. How do you scroll into view an element with Selenium?
+# 4. How do you select aria-label with selenium? Use css_selector [aria-label="XX"]
