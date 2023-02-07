@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Web Scraper Project{% endblock %}
+
+{% block content %}
+
+    <p> Hello World! </p>
+
+    <form method="post" enctype="multipart/form-data">
+            <input id="fileinput" class="btn btn-light" type="file" name="file" accept=".csv">
+            <label for="file"></label>
+
+        <input class="btn btn-primary" type="submit" value="Submit">
+
+    </form>
+
+    {% if jobs %}
+
+        <ol>
+            {% for job in jobs %}
+                <li>
+                    <ul>
+                        <li> Position: {{ job.title }}</li>
+                        <li> Company: {{ job.company_name }}</li>
+                        <li> Apply: <a href="{{ job.application_link }}">link</a></li>
+                        <li> Details: {{ job.application_details }}</li>
+                        <li> Description: {{ job.job_description[:100] }}...</li>
+
+                    </ul>
+                </li>
+                <br>
+            {% endfor %}
+        </ol>
+
+    {% endif %}
+
+
+{% endblock %}

@@ -13,12 +13,27 @@
 - [X] Go to next page and scrape all job postings and subsequent
 
 
-- [ ] Convert all page object data into a csv file or a db file?
-- [ ] Allow user to export data / save data to csv
+- [X] Convert all page object data into a csv file or a db file?
+- [X] Allow user to export data / save data to csv
 
 
-- [ ] Make a flask application that can intake the csv files
-- [ ] Display data on web page
+- [X] Make a flask application that can intake the csv files
+- [X] Display data on web page
+
+
+# PHASE 2
+
+- [ ] Make a seperate page for each position (showing full description)
+- [ ] Make each job posting into todo like items
+- [ ] Make different status for each job
+    - [ ] Applied and Waiting
+    - [ ] Interview process
+    - [ ] Rejected
+    - [ ] Offer
+    
+- [ ] Add an option to add job posting to current page
+    - Save as file storage object?
+- [ ] Save current page into csv file
 
 
 
