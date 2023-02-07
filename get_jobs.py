@@ -163,7 +163,3 @@ driver.close()
 
 # TODO:
 # Anki Cards
-# 1. What is the params and header kwargs for in the requests module?
-# 2. How to use selenium and beautiful soup together? --> selenium has .page_source
-# 3. How do you scroll into view an element with Selenium?
-# 4. How do you select aria-label with selenium? Use css_selector [aria-label="XX"]
