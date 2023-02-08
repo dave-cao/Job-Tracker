@@ -8,6 +8,9 @@ app = Flask(__name__)
 
 
 # Global Variables
+jobs = []
+
+
 @app.context_processor
 def get_year():
     return dict(year=date.today().year)
@@ -15,14 +18,26 @@ def get_year():
 
 @app.route("/", methods=["GET", "POST"])
 def home():
+    global jobs
 
     if request.method == "POST":
         file = request.files["file"]
-        file_data = handle_csv(file)
+        jobs = handle_csv(file)
 
-        return render_template("index.html", jobs=file_data)
+        return render_template("index.html", jobs=jobs)
 
     return render_template("index.html")
+
+
+@app.route("/job_page/<int:job_id>")
+def job_page(job_id):
+
+    selected_job = ""
+    for job in jobs:
+        if job["id"] == str(job_id):
+            selected_job = job
+
+    return render_template("job_page.html", job=selected_job)
 
 
 if __name__ == "__main__":
@@ -30,4 +45,3 @@ if __name__ == "__main__":
 
 
 # TODO Anki
-# - How do you read a .csv file input without saving data and parsing it the csv library? - You want to make it an io object!

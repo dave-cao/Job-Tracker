@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+{% block title %}Job Page{% endblock %}
+
+
+{% block content %}
+
+    <p> {{ job.title }}</p>
+    <p> {{ job.company_name }}</p>
+    <p> {{ job.application_link }}</p>
+    <p> {{ job.application_details }}</p>
+    <p> {{ job.job_description }}</p>
+
+{% endblock %}

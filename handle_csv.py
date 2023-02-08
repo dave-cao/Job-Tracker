@@ -8,4 +8,12 @@ def handle_csv(file):
     file_data = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
     reader = csv.DictReader(file_data)
 
-    return reader
+    jobs = [row for row in reader]
+
+    # clean up details and description
+    for i, job in enumerate(jobs):
+        job["id"] = str(i)
+        job["application_details"] = job["application_details"].strip("][")
+        job["job_description"] = job["job_description"].strip("][").replace("\\n", "\n")
+
+    return jobs
