@@ -16,4 +16,8 @@ def handle_csv(file):
         job["application_details"] = job["application_details"].strip("][")
         job["job_description"] = job["job_description"].strip("][").replace("\\n", "\n")
 
+        # status
+        job["status"] = ("status...", "white")
+        job["progression"] = "0"
+
     return jobs
