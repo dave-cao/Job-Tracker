@@ -33,12 +33,14 @@
     - [X] Rejected
     - [X] Offer
 
-- [ ] Change colour of list depending on status
+- [X] Change colour of list depending on status
     
 - [ ] Add an option to add job posting to current page
     - Save as file storage object?
 - [ ] Save current page into csv file
 - [ ] Make the description unclickable
+- [ ] Make different tabs for different statuses
+- [ ] Make a "back to the top" link when scrolling down
 
 
 

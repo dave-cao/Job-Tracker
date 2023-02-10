@@ -44,21 +44,20 @@ def job_page(job_id):
 def change_status(job_id):
     global jobs
 
-    selected_job = None
-    selected_i = None
-    for i, job in enumerate(jobs):
+    for job in jobs:
 
         if job["id"] == str(job_id):
             status = job["status"][0]
 
             progressions = {
+                # contains a dictionary of tuples, (0, 1): 0 being status message
+                # and 2 being the status colour
                 "0": ("Applied and Waiting", "yellow"),
                 "1": ("Interview Process", "orange"),
                 "2": ("Offer", "green"),
                 "3": ("Rejected", "red"),
             }
 
-            print(status == "Rejected")
             if status == "status..." or status == "Rejected":
                 job["status"] = progressions.get("0")
                 job["progression"] = "0"
@@ -68,13 +67,19 @@ def change_status(job_id):
 
                 job["status"] = progressions.get(str(progression))
 
-            # it's not a bug, it's a feature
-            selected_job = job
-            selected_i = i
+    current_url = request.args.get("current_url", "Error occurred")
+    if current_url == "home":
+        return redirect(url_for("home"))
+    else:
+        return redirect(current_url)
 
-    jobs = [selected_job] + jobs[:selected_i] + jobs[selected_i + 1 :]
 
-    return redirect(url_for("home"))
+@app.route("/<status>")
+def tabbed(status):
+
+    tabbed_jobs = [job for job in jobs if job["status"][0] == status]
+
+    return render_template("tab.html", jobs=tabbed_jobs)
 
 
 if __name__ == "__main__":

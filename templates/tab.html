@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Applied and Waiting{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{url_for("static", filename="css/home.css")}}">
+{% endblock %}
+
+{% block content %}
+    {{ super() }}
+
+{% endblock %}

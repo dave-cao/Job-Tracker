@@ -17,28 +17,9 @@
 
     </form>
 
-    {% if jobs %}
+        {{ super() }}
 
 
-        <div class="list-group">
-            {% for job in jobs %}
-                <li style="background-color: {{ job.status[1] }};" class="list-group-item list-group-item-action flex-column align-items-start no-select status-color" onclick="changeStatus(event)">
-
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ job.id }}. <a href="{{ url_for("job_page", job_id=job.id) }}">{{ job.title }} ~ <small>{{ job.company_name }}</small></a></h5>
-                        <small class="status"><a href="{{ url_for("change_status", job_id=job.id) }}">{{ job.status[0] }}</a></small>
-                    </div>
-                    <small><a href="{{ job.application_link }}">Apply: </a></small>
-                    <small>{{ job.application_details }}</small>
-                    <p>{{ job.job_description[:100] }}...</p>
-                </li>
-
-
-            {% endfor %}
-        </div>
-
-
-    {% endif %}
 
     {% block stripts %}
    <script src="{{ url_for("static", filename="js/home.js") }}"></script>
