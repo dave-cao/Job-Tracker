@@ -41,6 +41,7 @@
 - [ ] Make the description unclickable
 - [ ] Make different tabs for different statuses
 - [ ] Make a "back to the top" link when scrolling down
+- [ ] Pretty it up
 
 
 
