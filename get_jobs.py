@@ -1,4 +1,5 @@
 import csv
+import json
 import time
 
 from selenium import webdriver
@@ -97,7 +98,7 @@ def get_page_info():
         job_description = job_container.find_element(
             By.CSS_SELECTOR, "#jobDescriptionText"
         )
-        job_description = [job_description.text]
+        job_description = job_description.text
 
         # Put everything in a dictionary
         job_info = {
@@ -106,6 +107,8 @@ def get_page_info():
             "application_link": application_link,
             "application_details": application_details,
             "job_description": job_description,
+            "status": ["status...", "white"],
+            "progression": "0",
         }
 
         scraped_jobs.append(job_info)
@@ -141,21 +144,14 @@ while True:
         continue
 
 
-print("Creating csv and inputting data...")
-# Write job info into csv file
-with open("jobs.csv", "w", newline="") as file:
-    fieldnames = [
-        "title",
-        "company_name",
-        "application_link",
-        "application_details",
-        "job_description",
-    ]
-    writer = csv.DictWriter(file, fieldnames=fieldnames)
-    writer.writeheader()
+print("Creating json and inputting data...")
+# Write job info into json file
+# serializing json
+json_object = json.dumps(pages, indent=4)
 
-    for page in pages:
-        writer.writerow(page)
+# writing to jobs.json
+with open("jobs.json", "w") as file:
+    file.write(json_object)
 
 
 driver.close()
