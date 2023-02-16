@@ -107,8 +107,7 @@ def get_page_info():
             "application_link": application_link,
             "application_details": application_details,
             "job_description": job_description,
-            "status": ["status...", "white"],
-            "progression": "0",
+            "status": {"name": "status...", "color": "white", "progression": 0},
         }
 
         scraped_jobs.append(job_info)
@@ -118,6 +117,9 @@ def get_page_info():
 
 # Get info for all pages
 pages = []
+page_id = 0
+
+
 while True:
     print("Getting current page info...")
     pages += get_page_info()
@@ -143,6 +145,10 @@ while True:
     except NoSuchElementException:
         continue
 
+# add a page id to each object
+for page in pages:
+    page["id"] = page_id
+    page_id += 1
 
 print("Creating json and inputting data...")
 # Write job info into json file

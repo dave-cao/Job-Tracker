@@ -10,12 +10,13 @@
     <h1>Job Tracker</h1>
 
     <form method="post" enctype="multipart/form-data">
-            <input id="fileinput" class="btn btn-light" type="file" name="file" accept=".csv">
+            <input id="fileinput" class="btn btn-light" type="file" name="file" accept=".json">
             <label for="file"></label>
 
         <input class="btn btn-primary" type="submit" value="Submit">
     </form>
     <a href="{{url_for("save")}}">Save</a>
+    <a href="{{url_for("add")}}">Add</a>
 
         {{ super() }}
 

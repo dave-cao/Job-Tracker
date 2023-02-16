@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Add a Job{% endblock %}
+
+{% block content %}
+
+    <form method="post">
+        <label for="jobtitle" id="jobtitle">Job Title:</label><br>
+        <input type="text" name="jobtitle" required><br>
+
+        <label for="company_name" id="company_name">Company Name:</label><br>
+        <input type="text" name="company_name" required><br>
+
+        <label for="application_link" id="application_link">Application Link:</label><br>
+        <input type="url" name="application_link" required><br>
+
+        <label for="application_details" id="application_details">Application Details (Eg: Full-time, Remote)</label><br>
+        <input type="text" name="application_details" required><br>
+
+        <label for="job_description" id="job_description">Job Description</label><br>
+        <input type="textarea" name="job_description" required><br>
+
+
+        <input class="btn btn-primary" type="submit" value="Submit">
+
+    </form>
+
+
+{% endblock %}

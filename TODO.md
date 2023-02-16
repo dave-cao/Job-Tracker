@@ -27,7 +27,7 @@
 - [X] Make each job posting into todo like items
     - [X] Make it a single line
     - [X] Add true and false statements to it?
-- [O] Make different status for each job
+- [X] Make different status for each job
     - [X] Applied and Waiting
     - [X] Interview process
     - [X] Rejected
@@ -35,12 +35,12 @@
 
 - [X] Change colour of list depending on status
     
-- [ ] Add an option to add job posting to current page
+- [X] Add an option to add job posting to current page
     - Save as file storage object?
-- [ ] Save current page into csv file
-- [ ] Make the description unclickable
-- [ ] Make different tabs for different statuses
-- [ ] Make a "back to the top" link when scrolling down
+- [X] Save current page json file
+- [X] Make the description unclickable
+- [X] Make different tabs for different statuses
+- [X] Make a "back to the top" link when scrolling down
 - [ ] Pretty it up
 
 
