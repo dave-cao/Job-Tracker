@@ -21,3 +21,30 @@ def handle_csv(file):
         job["progression"] = "0"
 
     return jobs
+
+
+def save_jobs(jobs):
+
+    buffer = jobs.copy()
+    with open("jobstemp.csv", "w", newline="") as file:
+        fieldnames = [
+            "id",
+            "title",
+            "company_name",
+            "application_link",
+            "application_details",
+            "job_description",
+            "status",
+            "progression",
+        ]
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for job in buffer:
+            job["application_details"] = [job["application_details"]]
+            job["job_description"] = [job["job_description"]]
+            writer.writerow(job)
+
+            job["application_details"] = job["application_details"][0]
+            job["job_description"] = job["job_description"][0]
+        return

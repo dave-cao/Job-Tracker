@@ -1,8 +1,9 @@
+import csv
 from datetime import date
 
 from flask import Flask, redirect, render_template, request, url_for
 
-from handle_csv import handle_csv
+from handle_csv import handle_csv, save_jobs
 
 app = Flask(__name__)
 
@@ -56,9 +57,10 @@ def change_status(job_id):
                 "1": ("Interview Process", "orange"),
                 "2": ("Offer", "green"),
                 "3": ("Rejected", "red"),
+                "4": ("status...", "white"),
             }
 
-            if status == "status..." or status == "Rejected":
+            if status == "status...":
                 job["status"] = progressions.get("0")
                 job["progression"] = "0"
             elif job["status"] in progressions.values():
@@ -80,6 +82,15 @@ def tabbed(status):
     tabbed_jobs = [job for job in jobs if job["status"][0] == status]
 
     return render_template("tab.html", jobs=tabbed_jobs)
+
+
+@app.route("/save")
+def save():
+
+    # Write job info into csv file
+    save_jobs(jobs)
+
+    return redirect(url_for("home"))
 
 
 if __name__ == "__main__":
