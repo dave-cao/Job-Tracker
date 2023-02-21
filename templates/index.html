@@ -13,16 +13,27 @@
             <input id="fileinput" class="btn btn-light" type="file" name="file" accept=".json">
             <label for="file"></label>
 
-        <input class="btn btn-primary" type="submit" value="Submit">
+        <input class="btn btn-info" type="submit" value="Submit">
     </form>
-    <a href="{{url_for("save")}}">Save</a>
-    <a href="{{url_for("add")}}">Add</a>
 
         {{ super() }}
 
 
+        {% if not jobs %}
 
-    {% block stripts %}
+            <div class="welcome-text">
+                <h2>Welcome to My Job Tracking Website!</h2>
+                <p>Are you tired of endlessly scrolling through job listings, trying to find the perfect opportunity? Look no further! My job tracking website makes it easy to find and save job listings that match your search criteria.</p>
+                <p>To get started, simply head over to my GitHub repository and follow the instructions to scrape job listings based on your search query. Once you've done that, you should have a handy <code>jobs.json</code> file that you can easily upload onto our website to start tracking your job applications.</p>
+                <p>My website lets you organize your job listings and keep track of your progress with each application. Say goodbye to the chaos of the job search and hello to your dream career. Try it out today!</p>
+
+            </div>
+
+        {% endif %}
+
+
+
+    {% block scripts %}
    <script src="{{ url_for("static", filename="js/home.js") }}"></script>
 
     {% endblock %}

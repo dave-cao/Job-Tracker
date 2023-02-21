@@ -32,6 +32,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="https://davidsblog.xyz" target="_blank">Blog</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" target="_blank">Github</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -50,15 +54,19 @@
         {% endwith %}
 
         {% block content %}
+            <div class="btn-style">
+                <a class="btn btn-success" href="{{url_for("save", current_url=request.url)}}">Save</a>
+                <a class="btn btn-info" href="{{url_for("add")}}">Add</a>
+            </div>
 
             {% if request.endpoint != "home" or jobs %}
-            <ul class="tabs">
-                <a href="{{ url_for("home") }}"><li>All</li></a>
-                <a href="{{ url_for("tabbed", status="status...") }}"><li>Untouched</li></a>
-                <a href="{{ url_for("tabbed", status="Applied and Waiting") }}"><li>Applied and Waiting</li></a>
-                <a href="{{ url_for("tabbed", status="Interview Process") }}"><li>Interview Process</li></a>
-                <a href="{{ url_for("tabbed", status="Offer") }}"><li>Offer</li></a>
-                <a href="{{ url_for("tabbed", status="Rejected") }}"><li>Rejected</li></a>
+            <ul class="list-inline tab-style">
+                <a class="list-inline-item list-inline-item-action" href="{{ url_for("home") }}"><li>All</li></a>
+                <a class="list-inline-item list-inline-item-action" href="{{ url_for("tabbed", status="status...") }}"><li>Untouched</li></a>
+                <a class="list-inline-item flex-row" href="{{ url_for("tabbed", status="Applied and Waiting") }}"><li>Applied and Waiting</li></a>
+                <a class="list-inline-item flex-row" href="{{ url_for("tabbed", status="Interview Process") }}"><li>Interview Process</li></a>
+                <a class="list-inline-item flex-row" href="{{ url_for("tabbed", status="Offer") }}"><li>Offer</li></a>
+                <a class="list-inline-item flex-row" href="{{ url_for("tabbed", status="Rejected") }}"><li>Rejected</li></a>
             </ul>
 
             {% endif %}
@@ -67,7 +75,7 @@
 
                 <div class="list-group">
                     {% for job in jobs %}
-                        <li style="background-color: {{ job.status.color }};" class="list-group-item list-group-item-action flex-column align-items-start no-select status-color" onclick="changeStatus(event)">
+                        <li style="background-color: {{ job.status.color }};" class="list-group-item list-group-item-action flex-column align-items-start no-select status-color">
 
                             <div class="d-flex w-100 justify-content-between">
                                 <h5 class="mb-1">{{ job.id }}. <a href="{{ url_for("job_page", job_id=job.id) }}">{{ job.title }} ~ <small>{{ job.company_name }}</small></a></h5>
@@ -75,7 +83,10 @@
                             </div>
                             <small><a href="{{ job.application_link }}">Apply: </a></small>
                             <small>{{ job.application_details }}</small>
-                            <p>{{ job.job_description[:100] }}...</p>
+                            <div class="d-flex w-100 justify-content-between">
+                                <p>{{ job.job_description[:100] }}...</p>
+                                <small> <a href="{{ url_for("delete", job_id=job.id, current_url=request.url) }}">❌</a></small>
+                            </div>
                         </li>
 
 

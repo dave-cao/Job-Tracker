@@ -25,6 +25,7 @@ def home():
         file = request.files["file"]
 
         jobs = handle_json(file)
+        print(jobs)
 
         return render_template("index.html", jobs=jobs)
 
@@ -88,7 +89,11 @@ def save():
     # Write job info into csv file
     save_jobs(jobs)
 
-    return redirect(url_for("home"))
+    current_url = request.args.get("current_url", "Error occurred")
+    if current_url == "home":
+        return redirect(url_for("home"))
+    else:
+        return redirect(current_url)
 
 
 @app.route("/add", methods={"GET", "POST"})
@@ -109,12 +114,26 @@ def add():
             "status": {"name": "status...", "color": "white", "progression": 0},
         }
 
-        print(job_info)
         jobs.insert(0, job_info)
 
         return redirect(url_for("home"))
 
     return render_template("add.html")
+
+
+@app.route("/delete/<int:job_id>")
+def delete(job_id):
+    global jobs
+
+    for job in jobs:
+        if job["id"] == job_id:
+            jobs.remove(job)
+
+    current_url = request.args.get("current_url", "Error occurred")
+    if current_url == "home":
+        return redirect(url_for("home"))
+    else:
+        return redirect(current_url)
 
 
 if __name__ == "__main__":
