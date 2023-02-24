@@ -12,3 +12,17 @@
   display: flex;
   justify-content: space-around;
 }
+
+h1,
+form {
+  text-align: center;
+}
+
+.welcome-text {
+  max-width: 780px;
+  margin: auto;
+  left: 50%;
+  width: 90%;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
