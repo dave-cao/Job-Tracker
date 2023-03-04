@@ -51,10 +51,10 @@ def change_status(job_id):
         # contains a dictionary of tuples, (0, 1): 0 being status message
         # and 2 being the status colour
         "0": {"name": "status...", "color": "white", "progression": 0},
-        "1": {"name": "Applied and Waiting", "color": "yellow", "progression": 1},
-        "2": {"name": "Interview Process", "color": "orange", "progression": 2},
-        "3": {"name": "Offer", "color": "green", "progression": 3},
-        "4": {"name": "Rejected", "color": "red", "progression": 4},
+        "1": {"name": "Applied and Waiting", "color": "#FFFACD", "progression": 1},
+        "2": {"name": "Interview Process", "color": "#FFA07A", "progression": 2},
+        "3": {"name": "Offer", "color": "#98FB98", "progression": 3},
+        "4": {"name": "Rejected", "color": "#FFB6C1", "progression": 4},
     }
 
     for job in jobs:

@@ -28,6 +28,32 @@
 .tab-style {
   display: flex;
   justify-content: space-around;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.tab-style a {
+  display: block;
+  color: #333;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: bold;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-style a:hover {
+  background-color: #ddd;
+  border-bottom: 2px solid #333;
+}
+
+.tab-style a.active {
+  background-color: #fff;
+  border-bottom: 2px solid #333;
+  cursor: default;
 }
 
 .list-inline a {
@@ -38,7 +64,7 @@
 }
 
 .list-inline a:hover {
-  color: red;
+  color: blue;
   text-decoration: none;
   cursor: pointer;
 }
@@ -52,8 +78,42 @@
 
   .list-inline a {
     border-bottom: 1px black solid;
-    background-color: white;
     width: 70%;
     margin: 4px;
   }
+}
+
+.job-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.job-item {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+}
+
+.job-item h2 {
+  font-size: 24px;
+  margin: 0 0 10px 0;
+}
+
+.job-item p {
+  font-size: 16px;
+  margin: 0 0 10px 0;
+}
+
+.job-item a.btn {
+  font-size: 18px;
+  color: yellow;
+  text-decoration: none;
+}
+
+.job-item a {
+  text-decoration: none;
+  color: black;
 }
