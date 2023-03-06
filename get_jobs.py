@@ -77,8 +77,10 @@ def get_page_info():
         job_title = job_title.text[:-11]
 
         # Get the company name
-        company_name = job_container.find_element(
-            By.CSS_SELECTOR, ".jobsearch-InlineCompanyRating a"
+        company_name = wait.until(
+            EC.visibility_of_element_located(
+                (By.CSS_SELECTOR, ".jobsearch-CompanyInfoContainer a")
+            )
         )
         company_name = company_name.text
 

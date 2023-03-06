@@ -42,10 +42,10 @@
 - [X] Make different tabs for different statuses
 - [X] Make a "back to the top" link when scrolling down
 - [X] Delete button
-- [ ] Pretty it up
-    - [ ] page 1
-    - [ ] page 2
-    - [ ] page 3
+- [X] Pretty it up
+    - [X] page 1
+    - [X] page 2
+    - [X] page 3
 
 
 
