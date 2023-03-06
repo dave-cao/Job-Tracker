@@ -41,8 +41,11 @@
 - [X] Make the description unclickable
 - [X] Make different tabs for different statuses
 - [X] Make a "back to the top" link when scrolling down
-- [ ] Delete button
+- [X] Delete button
 - [ ] Pretty it up
+    - [ ] page 1
+    - [ ] page 2
+    - [ ] page 3
 
 
 
