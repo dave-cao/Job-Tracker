@@ -1,0 +1,50 @@
+.job-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.job-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.job-company {
+  font-size: 24px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.apply-now {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #008cba;
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.apply-now:hover {
+  background-color: #006f8b;
+}
+
+.application-details {
+  font-size: 16px;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+.description-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.job-description {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #444;
+}

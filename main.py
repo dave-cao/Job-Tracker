@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 # Global Variables
 jobs = []
+job_length = 0
 
 
 @app.context_processor
@@ -20,12 +21,13 @@ def get_year():
 @app.route("/", methods=["GET", "POST"])
 def home():
     global jobs
+    global job_length
 
     if request.method == "POST":
         file = request.files["file"]
 
         jobs = handle_json(file)
-        print(jobs)
+        job_length = len(jobs)
 
         return render_template("index.html", jobs=jobs)
 
@@ -99,13 +101,15 @@ def save():
 @app.route("/add", methods={"GET", "POST"})
 def add():
     global jobs
+    global job_length
 
     # Add a job posting to job tracker
     if request.method == "POST":
+        job_length += 1
 
         # Put everything in a dictionary
         job_info = {
-            "id": len(jobs),
+            "id": job_length,
             "title": request.form.get("jobtitle"),
             "company_name": request.form.get("company_name"),
             "application_link": request.form.get("application_link"),
