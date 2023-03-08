@@ -1,17 +1,17 @@
-import csv
 import json
 import time
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
-# from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 # user search inputs
-query = "python developer"
-location = "Edmonton Alberta"
+query = (
+    input("Please input your job search. Eg: Python Developer\n") or "Python Developer"
+)
+location = input("What is your location? Eg: Edmonton Alberta.\n") or "Edmonton Alberta"
 
 # make search inputs readable in url
 query = query.replace(" ", "+")
